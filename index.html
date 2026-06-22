@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GreenShield Agro — Pure Protection for Your Crops</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --forest:  #1B4332;
+    --mid:     #2D6A4F;
+    --lime:    #52B788;
+    --amber:   #D4A017;
+    --cream:   #F8F5EE;
+    --white:   #FFFFFF;
+    --text:    #1A1A1A;
+    --muted:   #5C6B5E;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--cream);
+    color: var(--text);
+    overflow-x: hidden;
+  }
+
+  /* ── NAVBAR ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 14px 32px;
+    background: rgba(27,67,50,0.92);
+    backdrop-filter: blur(10px);
+  }
+  .nav-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.35rem; font-weight: 700;
+    color: var(--white);
+    display: flex; align-items: center; gap: 8px;
+  }
+  .nav-logo span { color: var(--lime); }
+  .nav-cta {
+    display: flex; gap: 10px;
+  }
+  .btn-call {
+    display: flex; align-items: center; gap: 6px;
+    padding: 8px 16px; border-radius: 50px;
+    background: var(--amber); color: var(--white);
+    font-weight: 600; font-size: 0.82rem;
+    text-decoration: none; border: none; cursor: pointer;
+    transition: transform .15s, box-shadow .15s;
+  }
+  .btn-call:hover { transform: translateY(-1px); box-shadow: 0 4px 14px rgba(212,160,23,.45); }
+  .btn-wa {
+    display: flex; align-items: center; gap: 6px;
+    padding: 8px 16px; border-radius: 50px;
+    background: #25D366; color: var(--white);
+    font-weight: 600; font-size: 0.82rem;
+    text-decoration: none; border: none; cursor: pointer;
+    transition: transform .15s, box-shadow .15s;
+  }
+  .btn-wa:hover { transform: translateY(-1px); box-shadow: 0 4px 14px rgba(37,211,102,.4); }
+
+  /* ── HERO ── */
+  .hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    text-align: center;
+    overflow: hidden;
+    background: linear-gradient(160deg, #0d2e1e 0%, #1B4332 45%, #2D6A4F 100%);
+    padding: 120px 24px 80px;
+  }
+  /* Leaf canvas behind content */
+  #leafCanvas { position: absolute; inset: 0; pointer-events: none; }
+
+  .hero-eyebrow {
+    font-size: 0.78rem; letter-spacing: .18em; text-transform: uppercase;
+    color: var(--lime); font-weight: 600; margin-bottom: 18px;
+  }
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.4rem, 6vw, 5rem);
+    font-weight: 900; color: var(--white);
+    line-height: 1.08; max-width: 780px;
+    position: relative; z-index: 2;
+  }
+  .hero h1 em { color: var(--lime); font-style: normal; }
+  .hero-sub {
+    margin-top: 20px; max-width: 520px;
+    color: rgba(255,255,255,.72); font-size: 1.05rem; line-height: 1.65;
+    position: relative; z-index: 2;
+  }
+  .hero-btns {
+    margin-top: 36px; display: flex; gap: 14px; flex-wrap: wrap; justify-content: center;
+    position: relative; z-index: 2;
+  }
+  .btn-primary {
+    padding: 14px 30px; border-radius: 50px;
+    background: var(--lime); color: var(--forest);
+    font-weight: 700; font-size: 0.95rem;
+    text-decoration: none; transition: transform .15s, box-shadow .15s;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 6px 22px rgba(82,183,136,.5); }
+  .btn-outline {
+    padding: 14px 30px; border-radius: 50px;
+    background: transparent; color: var(--white);
+    border: 2px solid rgba(255,255,255,.4);
+    font-weight: 600; font-size: 0.95rem;
+    text-decoration: none; transition: all .15s;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .btn-outline:hover { border-color: var(--white); background: rgba(255,255,255,.08); }
+
+  /* trust strip */
+  .trust-strip {
+    background: var(--forest);
+    display: flex; justify-content: center; align-items: center;
+    gap: 48px; flex-wrap: wrap;
+    padding: 22px 32px;
+  }
+  .trust-item {
+    display: flex; align-items: center; gap: 10px;
+    color: rgba(255,255,255,.85); font-size: 0.85rem; font-weight: 500;
+  }
+  .trust-item .ti { font-size: 1.3rem; }
+
+  /* ── SECTION ── */
+  section { padding: 80px 24px; }
+  .section-label {
+    text-align: center;
+    font-size: 0.75rem; letter-spacing: .18em; text-transform: uppercase;
+    color: var(--lime); font-weight: 600; margin-bottom: 10px;
+  }
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.8rem, 4vw, 2.8rem); font-weight: 700;
+    color: var(--forest); text-align: center; line-height: 1.15;
+    margin-bottom: 12px;
+  }
+  .section-sub {
+    text-align: center; color: var(--muted); font-size: 0.97rem;
+    max-width: 540px; margin: 0 auto 52px; line-height: 1.65;
+  }
+
+  /* ── PRODUCTS ── */
+  .products-bg { background: var(--white); }
+  .products-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+    gap: 28px; max-width: 1100px; margin: 0 auto;
+  }
+  .product-card {
+    background: var(--cream);
+    border-radius: 20px; overflow: hidden;
+    border: 1.5px solid rgba(82,183,136,.2);
+    transition: transform .2s, box-shadow .2s;
+    display: flex; flex-direction: column;
+  }
+  .product-card:hover { transform: translateY(-6px); box-shadow: 0 16px 40px rgba(27,67,50,.12); }
+  .card-icon-wrap {
+    height: 160px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 5.5rem;
+    background: linear-gradient(135deg, #d8f3dc 0%, #b7e4c7 100%);
+    position: relative;
+  }
+  .card-badge {
+    position: absolute; top: 12px; right: 12px;
+    background: var(--amber); color: var(--white);
+    font-size: 0.7rem; font-weight: 700; letter-spacing: .05em; text-transform: uppercase;
+    padding: 3px 10px; border-radius: 50px;
+  }
+  .card-body { padding: 20px; flex: 1; display: flex; flex-direction: column; gap: 8px; }
+  .card-body h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.15rem; font-weight: 700; color: var(--forest);
+  }
+  .card-tag {
+    font-size: 0.72rem; letter-spacing: .12em; text-transform: uppercase;
+    color: var(--lime); font-weight: 600;
+  }
+  .card-desc { font-size: 0.87rem; color: var(--muted); line-height: 1.55; flex: 1; }
+  .card-price {
+    font-size: 1.5rem; font-weight: 700; color: var(--forest);
+    display: flex; align-items: baseline; gap: 4px;
+  }
+  .card-price span { font-size: 0.8rem; color: var(--muted); font-weight: 400; }
+  .card-actions { display: flex; gap: 8px; margin-top: 6px; }
+  .btn-order {
+    flex: 1; padding: 10px 0; border-radius: 50px;
+    background: #25D366; color: var(--white);
+    font-weight: 600; font-size: 0.85rem; text-align: center;
+    text-decoration: none; display: flex; align-items: center; justify-content: center; gap: 6px;
+    transition: transform .15s, box-shadow .15s;
+  }
+  .btn-order:hover { transform: translateY(-1px); box-shadow: 0 4px 14px rgba(37,211,102,.4); }
+  .btn-enquire {
+    padding: 10px 14px; border-radius: 50px;
+    background: var(--forest); color: var(--white);
+    font-weight: 600; font-size: 0.85rem;
+    text-decoration: none; display: flex; align-items: center; gap: 5px;
+    transition: transform .15s;
+  }
+  .btn-enquire:hover { transform: translateY(-1px); }
+
+  /* ── WHY US ── */
+  .why-bg { background: var(--cream); }
+  .why-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 28px; max-width: 900px; margin: 0 auto;
+  }
+  .why-card {
+    background: var(--white);
+    border-radius: 18px; padding: 28px 22px;
+    border: 1.5px solid rgba(82,183,136,.18);
+    text-align: center;
+  }
+  .why-icon { font-size: 2.4rem; margin-bottom: 12px; }
+  .why-card h4 { font-size: 1rem; font-weight: 700; color: var(--forest); margin-bottom: 6px; }
+  .why-card p { font-size: 0.84rem; color: var(--muted); line-height: 1.55; }
+
+  /* ── TESTIMONIALS ── */
+  .testi-bg { background: var(--forest); }
+  .testi-bg .section-title { color: var(--white); }
+  .testi-bg .section-sub { color: rgba(255,255,255,.65); }
+  .testi-bg .section-label { color: var(--lime); }
+  .testi-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 24px; max-width: 900px; margin: 0 auto;
+  }
+  .testi-card {
+    background: rgba(255,255,255,.08); border: 1.5px solid rgba(255,255,255,.12);
+    border-radius: 18px; padding: 26px;
+  }
+  .testi-stars { color: var(--amber); font-size: 1rem; margin-bottom: 12px; }
+  .testi-text { color: rgba(255,255,255,.82); font-size: 0.88rem; line-height: 1.65; }
+  .testi-author { margin-top: 16px; color: var(--lime); font-size: 0.82rem; font-weight: 600; }
+
+  /* ── STICKY CTA ── */
+  .sticky-cta {
+    position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
+    display: flex; gap: 10px; z-index: 99;
+    background: rgba(27,67,50,.95); padding: 10px 16px; border-radius: 60px;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 8px 32px rgba(0,0,0,.25);
+  }
+  .sticky-btn {
+    display: flex; align-items: center; gap: 6px;
+    padding: 10px 18px; border-radius: 50px;
+    font-weight: 600; font-size: 0.82rem; text-decoration: none;
+    transition: transform .15s;
+  }
+  .sticky-btn:hover { transform: translateY(-1px); }
+  .scall { background: var(--amber); color: var(--white); }
+  .senquiry { background: var(--forest); color: var(--white); border: 1.5px solid var(--lime); }
+  .swa { background: #25D366; color: var(--white); }
+
+  /* ── FOOTER ── */
+  footer {
+    background: #0d2e1e; color: rgba(255,255,255,.55);
+    text-align: center; padding: 36px 24px 100px;
+    font-size: 0.82rem; line-height: 1.8;
+  }
+  footer strong { color: var(--lime); }
+  .footer-logo {
+    font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 700;
+    color: var(--white); margin-bottom: 8px;
+  }
+  .footer-logo span { color: var(--lime); }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 600px) {
+    nav { padding: 12px 16px; }
+    .nav-logo { font-size: 1.1rem; }
+    .btn-call, .btn-wa { font-size: 0.75rem; padding: 7px 12px; }
+    .trust-strip { gap: 24px; }
+    .sticky-cta { width: calc(100% - 24px); justify-content: center; }
+  }
+
+  /* scrollbar */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: var(--cream); }
+  ::-webkit-scrollbar-thumb { background: var(--lime); border-radius: 10px; }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">🌿 Green<span>Shield</span> Agro</div>
+  <div class="nav-cta">
+    <a class="btn-call" href="tel:+917569162287">📞 Call Now</a>
+    <a class="btn-wa" href="https://wa.me/917569162287?text=Hi%2C%20I%20want%20to%20know%20more%20about%20your%20products!" target="_blank">💬 WhatsApp</a>
+  </div>
+</nav>
+
+<!-- LEAF CANVAS HERO -->
+<div class="hero">
+  <canvas id="leafCanvas"></canvas>
+  <p class="hero-eyebrow">🌾 Trusted by 500+ Farmers Across Andhra Pradesh</p>
+  <h1>Protect Your Crops.<br><em>Boost Your Yield.</em><br>Naturally.</h1>
+  <p class="hero-sub">High-quality pesticides and fertilizers formulated for Indian soil conditions. Safe, effective, and affordable for small-scale farmers.</p>
+  <div class="hero-btns">
+    <a class="btn-primary" href="https://wa.me/917569162287?text=Hi%2C%20I%20want%20to%20place%20an%20order!" target="_blank">🛒 Order on WhatsApp</a>
+    <a class="btn-outline" href="https://wa.me/917569162287?text=Hi%2C%20I%20have%20an%20enquiry%20about%20your%20products." target="_blank">❓ Enquire Now</a>
+  </div>
+</div>
+
+<!-- TRUST STRIP -->
+<div class="trust-strip">
+  <div class="trust-item"><span class="ti">✅</span> Govt. Certified Products</div>
+  <div class="trust-item"><span class="ti">🚚</span> Free Delivery Above ₹500</div>
+  <div class="trust-item"><span class="ti">🌿</span> Eco-Safe Formulas</div>
+  <div class="trust-item"><span class="ti">📞</span> Expert Farmer Support</div>
+  <div class="trust-item"><span class="ti">💰</span> Wholesale Prices</div>
+</div>
+
+<!-- PRODUCTS -->
+<section class="products-bg">
+  <p class="section-label">Our Products</p>
+  <h2 class="section-title">What Farmers Are Loving</h2>
+  <p class="section-sub">Carefully selected pesticides and nutrients for paddy, cotton, chilli, and vegetable crops.</p>
+
+  <div class="products-grid">
+
+    <!-- Product 1 -->
+    <div class="product-card">
+      <div class="card-icon-wrap">🌿<div class="card-badge">Best Seller</div></div>
+      <div class="card-body">
+        <p class="card-tag">Insecticide</p>
+        <h3>ChloroGuard 50% EC</h3>
+        <p class="card-desc">Broad-spectrum insecticide effective against sucking pests, aphids, and leafhoppers. Works on paddy, cotton, and chilli.</p>
+        <div class="card-price">₹320 <span>/ 250ml</span></div>
+        <div class="card-actions">
+          <a class="btn-order" href="https://wa.me/917569162287?text=Hi%2C%20I%20want%20to%20order%20ChloroGuard%2050%25%20EC" target="_blank">🛒 Order</a>
+          <a class="btn-enquire" href="https://wa.me/917569162287?text=Hi%2C%20I%20have%20an%20enquiry%20about%20ChloroGuard%2050%25%20EC" target="_blank">❓</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Product 2 -->
+    <div class="product-card">
+      <div class="card-icon-wrap">🌾<div class="card-badge">New</div></div>
+      <div class="card-body">
+        <p class="card-tag">Fungicide</p>
+        <h3>FungoClear Mancozeb 75</h3>
+        <p class="card-desc">Preventive and curative fungicide for blast, leaf spot, and downy mildew. Safe for vegetables and cereals.</p>
+        <div class="card-price">₹210 <span>/ 500g</span></div>
+        <div class="card-actions">
+          <a class="btn-order" href="https://wa.me/917569162287?text=Hi%2C%20I%20want%20to%20order%20FungoClear%20Mancozeb%2075" target="_blank">🛒 Order</a>
+          <a class="btn-enquire" href="https://wa.me/917569162287?text=Hi%2C%20I%20have%20an%20enquiry%20about%20FungoClear%20Mancozeb%2075" target="_blank">❓</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Product 3 -->
+    <div class="product-card">
+      <div class="card-icon-wrap">🌱<div class="card-badge">Eco-Safe</div></div>
+      <div class="card-body">
+        <p class="card-tag">Bio Pesticide</p>
+        <h3>NeemPro Azadirachtin</h3>
+        <p class="card-desc">100% botanical pesticide from neem extract. Controls 200+ pests. Safe for humans, birds, and bees.</p>
+        <div class="card-price">₹480 <span>/ 1L</span></div>
+        <div class="card-actions">
+          <a class="btn-order" href="https://wa.me/917569162287?text=Hi%2C%20I%20want%20to%20order%20NeemPro%20Azadirachtin" target="_blank">🛒 Order</a>
+          <a class="btn-enquire" href="https://wa.me/917569162287?text=Hi%2C%20I%20have%20an%20enquiry%20about%20NeemPro%20Azadirachtin" target="_blank">❓</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Product 4 -->
+    <div class="product-card">
+      <div class="card-icon-wrap">🌻<div class="card-badge">Popular</div></div>
+      <div class="card-body">
+        <p class="card-tag">Herbicide</p>
+        <h3>WeedErase Glyphosate 41%</h3>
+        <p class="card-desc">Systemic weed killer for non-selective control of annual and perennial weeds in non-crop areas.</p>
+        <div class="card-price">₹175 <span>/ 500ml</span></div>
+        <div class="card-actions">
+          <a class="btn-order" href="https://wa.me/917569162287?text=Hi%2C%20I%20want%20to%20order%20WeedErase%20Glyphosate%2041%25" target="_blank">🛒 Order</a>
+          <a class="btn-enquire" href="https://wa.me/917569162287?text=Hi%2C%20I%20have%20an%20enquiry%20about%20WeedErase%20Glyphosate%2041%25" target="_blank">❓</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Product 5 -->
+    <div class="product-card">
+      <div class="card-icon-wrap">🍃</div>
+      <div class="card-body">
+        <p class="card-tag">Growth Promoter</p>
+        <h3>CropBoost NPK Spray</h3>
+        <p class="card-desc">Liquid NPK micronutrient spray for faster vegetative growth and improved flowering. Doubles yield in trial fields.</p>
+        <div class="card-price">₹390 <span>/ 1L</span></div>
+        <div class="card-actions">
+          <a class="btn-order" href="https://wa.me/917569162287?text=Hi%2C%20I%20want%20to%20order%20CropBoost%20NPK%20Spray" target="_blank">🛒 Order</a>
+          <a class="btn-enquire" href="https://wa.me/917569162287?text=Hi%2C%20I%20have%20an%20enquiry%20about%20CropBoost%20NPK%20Spray" target="_blank">❓</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Product 6 -->
+    <div class="product-card">
+      <div class="card-icon-wrap">🌿<div class="card-badge">Combo Deal</div></div>
+      <div class="card-body">
+        <p class="card-tag">Starter Kit</p>
+        <h3>Kisan Combo Pack</h3>
+        <p class="card-desc">Includes ChloroGuard + FungoClear + NeemPro. Best value bundle for paddy and vegetable farmers.</p>
+        <div class="card-price">₹890 <span>/ kit (Save ₹120)</span></div>
+        <div class="card-actions">
+          <a class="btn-order" href="https://wa.me/917569162287?text=Hi%2C%20I%20want%20to%20order%20the%20Kisan%20Combo%20Pack" target="_blank">🛒 Order</a>
+          <a class="btn-enquire" href="https://wa.me/917569162287?text=Hi%2C%20I%20have%20an%20enquiry%20about%20the%20Kisan%20Combo%20Pack" target="_blank">❓</a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- WHY US -->
+<section class="why-bg">
+  <p class="section-label">Why Choose Us</p>
+  <h2 class="section-title">Farmers First. Always.</h2>
+  <p class="section-sub">We're not just selling pesticides — we're protecting livelihoods.</p>
+  <div class="why-grid">
+    <div class="why-card">
+      <div class="why-icon">🏛️</div>
+      <h4>Govt. Approved</h4>
+      <p>All products carry valid CIB&RC registration. 100% legal and compliant.</p>
+    </div>
+    <div class="why-card">
+      <div class="why-icon">🔬</div>
+      <h4>Lab Tested Quality</h4>
+      <p>Every batch tested for purity and potency before reaching farmers.</p>
+    </div>
+    <div class="why-card">
+      <div class="why-icon">💬</div>
+      <h4>Free Crop Advisory</h4>
+      <p>WhatsApp us your crop problem and get a free recommendation instantly.</p>
+    </div>
+    <div class="why-card">
+      <div class="why-icon">🚚</div>
+      <h4>Fast Delivery</h4>
+      <p>Doorstep delivery across AP & Telangana within 2–3 working days.</p>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testi-bg">
+  <p class="section-label">Farmer Stories</p>
+  <h2 class="section-title">What Farmers Say</h2>
+  <p class="section-sub">Real results. Real fields. Real people.</p>
+  <div class="testi-grid">
+    <div class="testi-card">
+      <div class="testi-stars">★★★★★</div>
+      <p class="testi-text">"ChloroGuard saved my chilli crop this season. The aphid attack was severe but within 3 days it was completely under control. Will buy again!"</p>
+      <p class="testi-author">— Ramaiah, Chilli Farmer, Guntur</p>
+    </div>
+    <div class="testi-card">
+      <div class="testi-stars">★★★★★</div>
+      <p class="testi-text">"NeemPro is amazing for organic farming. My vegetables are pest-free and safe to sell in the organic market at higher prices."</p>
+      <p class="testi-author">— Lakshmi Devi, Vegetable Farmer, Nellore</p>
+    </div>
+    <div class="testi-card">
+      <div class="testi-stars">★★★★☆</div>
+      <p class="testi-text">"Ordered the Kisan Combo Pack on WhatsApp. Delivery was fast, quality is genuine. Price is much better than my local shop."</p>
+      <p class="testi-author">— Krishnarao, Paddy Farmer, Krishna Dist.</p>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">🌿 Green<span>Shield</span> Agro</div>
+  <p>Protecting crops. Empowering farmers. Sustainably.</p>
+  <p style="
